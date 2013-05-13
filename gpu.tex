@@ -1,0 +1,18 @@
+\documentclass{article}
+\begin{document}
+\title{GPU compression and PAPER}
+\author{Gilbert Hsyu}
+\section{Requirements}
+	The goal of the project is to have the GPUs that perform the cross correlation (X engine) during the night-time data gathering also compress during the day, when the correlator is not in use.  The number of GPUs required for the X engine is determined by the number of cross products, and therefore scales with $N^2$, where N is the number of antenna polarizations in the array (except on small array sizes, which may be bandwidth bound).
+	The amount of data that our correlator produces, and which must then be  compressed is given by the equation:
+	\begin{equation}
+	\frac{\frac{N_{ant pol}(N_{ant pol}+1)}{2}\cdot N_{\mathrm{channels}}*2*32 \mathrm{b}}{t_{\mathrm{integration}}}
+	\end{equation}
+	which also scales with $N^2$.  Therefore, if the GPUs used as the X engine are also sufficient to compress the incoming data on current arrays, they should also be sufficient on larger arrays.
+	\subsection*{PAPER}
+	The PAPER array has 128 dipole antennas, and therefore 256 antenna polarizations.  With 1024 channels and an integration time of 10 seconds, this gives $\frac{\frac{256(256+1)}{2}\cdot 1024 \cdot 2 \cdot 32 \mathrm{b}}{10s} = 216 \mathrm{Mbps}$, which would have to be processed on 16 GPUs, which is $13.5 \mathrm{Mbps/GPU}$.
+	\subsection*{HERA}
+	The proposed HERA array would be similar to the PAPER array, but would have 1024 dipole antennas and 256 GPUs.  8 times as many antennas results in 64 times the amount of data, or $64*216 \mathrm{Mbps} = 1.4 \mathrm{Tbps} = 55 \mathrm{Mbps/GPU}$.
+\section{Current State}
+	The most recent tests were done on 2 megapixel images in batches of 10 on two NVIDIA GPUs, the K20 TITAN, and the GeForce 690.  The results were 2.12 seconds per image on the TITAN, and 3.7 seconds on 1 core of the dual core 690.  This gives a result of $63 \mathrm{Mbps/GPU}$ for the TITAN and $36 \mathrm{Mbps}$ for the GeForce 690, meaning the GPUs are currently fast enough to keep up with the data rate of the X engine.  However, windowing effects may cause the computation to require up to 3 times as many uses of the data, so either improving the speed further or mitigating these effects is necessary.
+\end{document}
