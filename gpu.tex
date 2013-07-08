@@ -1,4 +1,21 @@
-\documentclass{article}
+\documentclass[11pt]{article}
+
+\usepackage[top=1in, bottom=1in, left=1in, right=1in]{geometry}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{mdwlist}
+%\usepackage{natbib}
+%\usepackage{natbibspacing}
+%\setlength{\bibspacing}{0pt}
+\setlength{\parskip}{0pt}
+\setlength{\parsep}{0pt}
+\setlength{\headsep}{0pt}
+\setlength{\topskip}{0pt}
+\setlength{\topmargin}{0pt}
+\setlength{\topsep}{0pt}
+\setlength{\partopsep}{0pt}
+\setlength{\footnotesep}{8pt}
+
 \begin{document}
 \title{GPU compression and PAPER}
 \author{Gilbert Hsyu}
@@ -28,18 +45,18 @@
 	%Test multiple threads on one GPU
 	%Also explain difference between commits
 	\begin{tabular}{c|c|c|c|c|c|c|c}
-	GPU & cards (GPUs) & image size & time per (image/ GPU card) & stop if div & iter & Mbps/GPU card & git hash \\
+	GPU & cards (GPUs) & image size & t / (img or GPU ) & stop if div & iter & Mbps/GPU card & git hash \\
 	\hline
-	CPU & 1	& $1024 /times 2048$ (1)& 68.5 seconds & True & 864 & 2.0 & e448e3e5bc849b14680529bc53f2f8b92afd4556\\
-	CPU & 1 (6 instances) & $1024 /times 2048$ (6)& 282 seconds (47 per image) & False & 1 & 2.9 & e448e3e5bc849b14680529bc53f2f8b92afd4556\\
+	CPU & 1	& $1024 \times 2048$ (1)& 68.5 s& True & 864 & 2.0 & e448e3\\
+	CPU & 1 (6 instances) & $1024 \times 2048$ (6)& 282 s(47 per image) & False & 1 & 2.9 & e448e3\\
 	
-	CPU & 1 (6 instances) & $1024 /times 2048$ (6)& 202 seconds (34 per image) & True & 864 & 3.9 & e448e3e5bc849b14680529bc53f2f8b92afd4556\\
-	K20 & 1 (1) & $1024 \times 2048$ (1)& 2.12 seconds & True & 864 &  63 & a8306ac8def5d8b7a0a1d9c54591f76e6bacd61c \\
-	690 & 1 (1) & $1024 \times 2048$ (1)& 3.7 seconds & True & 864 &  36 & a8306ac8def5d8b7a0a1d9c54591f76e6bacd61c \\
-	690 & 2 (4) & $1024 \times 2048$ (4) & 1.73 seconds & True & 864 & 39 & e448e3e5bc849b14680529bc53f2f8b92afd4556 \\
-	690 & 2 (4) & $1024 \times 1024$ (4)& .79 seconds & True & 864 & 43 & e448e3e5bc849b14680529bc53f2f8b92afd4556 \\
-	690 & 2 (4) & $1024 \times 512$ (4)& .39 seconds & True & 864 & 43 & e448e3e5bc849b14680529bc53f2f8b92afd4556 \\
-	690 & 2 (4) & $1024 \times 1024$ (4)& .76 seconds & True & 864 & 44 & e448e3e5bc849b14680529bc53f2f8b92afd4556 \\
-	690 & 2 (4) & $1024 \times 2048$ (5)& .5 seconds & True & 864 & 67 & e448e3e5bc849b14680529bc53f2f8b92afd4556
+	CPU & 1 (6 instances) & $1024 \times 2048$ (6)& 202 s (34 per image) & True & 864 & 3.9 & e448e3\\
+	K20 & 1 (1) & $1024 \times 2048$ (1)& 2.12 s & True & 864 &  63 & a8306a\\
+	690 & 1 (1) & $1024 \times 2048$ (1)& 3.7 s & True & 864 &  36 & a8306a\\
+	690 & 2 (4) & $1024 \times 2048$ (4) & 1.73 s & True & 864 & 39 & e448e3\\
+	690 & 2 (4) & $1024 \times 1024$ (4)& .79 s & True & 864 & 43 & e448e3\\
+	690 & 2 (4) & $1024 \times 512$ (4)& .39 s & True & 864 & 43 & e448e3\\
+	690 & 2 (4) & $1024 \times 1024$ (4)& .76 s & True & 864 & 44 & e448e3\\
+	690 & 2 (4) & $1024 \times 2048$ (5)& .5 s & True & 864 & 67 & e448e3
 	\end{tabular}
 \end{document}
