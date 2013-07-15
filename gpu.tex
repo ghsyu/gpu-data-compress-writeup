@@ -35,12 +35,6 @@
 	
 	Testing with multiple threads used snb1, a machine with 2 GeForce 690 GTX cards, each with 2 cores. The profiler used in previous tests caused segfaults when used with threading, so a new baseline was needed.  One thread took 5.3 seconds for one iteration, and 9.0 seconds for 2 iterations, consistent with the previously obtained 3.7 second runtime per iteration.  However, this version did not properly parallelize.
 	With a multithreaded version running on snb1 (78e6675701b2e41fbf734dea10f08153e74d21dc on github)on 2013/6/7, with one thread for each of the 4 cores, the CUDA and C portion of the code took 16 seconds for 4 iterations, again with a 2 Mpx image, of $67 \mathrm{Mbps/GPU}$.  However, the python portion of the code is less efficient and with that overhead, the code took 25 seconds, which translates to $43 \mathrm{Mbps/GPU}$.  There is little difference (~1\%) between using 2 GPUs on one 690, and 1 GPU on each of 2 690 cards.
-	8 iterations 55.28 seconds 2 Mpx
-	16 iterations 50.4 seconds 1 Mpx
-	6/24
-	32 iterations 49.5 seconds .5 Mpx
-	16 iterations 48.6 seconds 1 Mpx
-	
 	%Test multiple threads on one GPU
 	%Also explain difference between commits
 	\begin{tabular}{r|r|r|r|r|r|r|l}
@@ -64,6 +58,11 @@
 	2$\times$690 & 1 (of 8) & $1024 \times 2048$ (5)& 11.8 (1.48) & T & 864 &  11.4 (91) & 36ebff\\
 	1$\times$CPU & 1 (of 12)& $1024 \times 2048$(12)& 405.4(33.8) & T & 864 &  .33 (4.0) & 36ebff\\
 	2$\times$690 & 1 (of 12)& $1024 \times 2048$(12)& 70.5 (5.9)  & T & 864 &  1.9 (22.8)& 36ebff\\
-	1$\times$CPU & 1 (of 12)& $1024 \times 1024$(12)& 90.3 (7.53) & T & 864 &  .74 (8.92)& 36ebff
+	1$\times$CPU & 1 (of 12)& $1024 \times 1024$(12)& 90.3 (7.53) & T & 864 &  .74 (8.92)& 36ebff\\
+	1$\times$CPU & 1 (of 4)& $1024 \times 2048$(4)& 68.7/.11 fft (17.2) & T & 864 & .98 (3.9) & 36ebff\\
+	1$\times$690 & 1 (of 4)& $1024 \times 2048$(4)& 6.0/1.9 fft (1.5) & T & 864 & 22.4 (70.6) & 36ebff\\
+	1$\times$690 & 1 (of 4)& $1024 \times 1024$(4)& 3.2/.65 fft (.80) & T & 864 & 21.0 (103.2) & 36ebff\\
+	1$\times$690 & 1 (of 4)& $1024 \times 512$ (4)& 1.8/.29 fft (.45) & T & 864 & 18.6 (74.6) & 36ebff
+	
 	\end{tabular}
 \end{document}
